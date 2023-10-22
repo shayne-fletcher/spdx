@@ -2,7 +2,13 @@ use std::ops::Deref;
 use std::ops::DerefMut;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
-pub struct LicenseExceptionId(String);
+pub struct LicenseExceptionId(pub String);
+
+impl std::fmt::Display for LicenseExceptionId {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
+        self.deref().fmt(f)
+    }
+}
 
 impl Deref for LicenseExceptionId {
     type Target = String;
