@@ -110,18 +110,30 @@ mod test {
 
     #[test]
     fn test_roundtrip_simple_0() {
-        let s = "LicenseRef-23";
+        let s = "CDDL-1.0";
         assert_eq!(s.parse::<LicenseExpr>().unwrap().to_string(), s)
     }
 
     #[test]
     fn test_roundtrip_simple_1() {
-        let s = "LicenseRef-MIT-Style-1";
+        let s = "CDDL-1.0+";
         assert_eq!(s.parse::<LicenseExpr>().unwrap().to_string(), s)
     }
 
     #[test]
     fn test_roundtrip_simple_2() {
+        let s = "LicenseRef-23";
+        assert_eq!(s.parse::<LicenseExpr>().unwrap().to_string(), s)
+    }
+
+    #[test]
+    fn test_roundtrip_simple_3() {
+        let s = "LicenseRef-MIT-Style-1";
+        assert_eq!(s.parse::<LicenseExpr>().unwrap().to_string(), s)
+    }
+
+    #[test]
+    fn test_roundtrip_simple_4() {
         let s = "DocumentRef-spdx-tool-1.2:LicenseRef-MIT-Style-2";
         assert_eq!(s.parse::<LicenseExpr>().unwrap().to_string(), s)
     }
