@@ -1,0 +1,20 @@
+[package]
+name = "spdx-lib"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+anyhow = "1.0.75"
+dashmap = "5.5.3"
+lrpar = "0.13.3"
+lrlex = "0.13.3"
+cfgrammar = "0.13.3"
+serde_json = "1.0"
+# serde = { version = "1.0", features = ["derive"] }
+# toml = { version="0.8.2", default_features = false, features = ["parse", "display"] }
+
+[build-dependencies]
+lrpar = "0.13.3"
+lrlex = "0.13.3"
+cfgrammar = "0.13.3"
