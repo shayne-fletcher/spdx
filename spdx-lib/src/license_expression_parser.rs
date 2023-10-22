@@ -21,7 +21,7 @@ impl std::str::FromStr for LicenseExpr {
 
 impl std::fmt::Display for LicenseId {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
-        write!(f, "{}", &self.id)?;
+        self.id.fmt(f)?;
         if self.plus {
             write!(f, "+")?;
         }
@@ -31,7 +31,7 @@ impl std::fmt::Display for LicenseId {
 
 impl std::fmt::Display for LicenseExceptionId {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
-        write!(f, "{}", self.id)
+        self.id.fmt(f)
     }
 }
 
