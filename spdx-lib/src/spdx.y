@@ -35,7 +35,7 @@ Term -> Result<ast::CompoundExpr, ()>:
 Factor -> Result<ast::CompoundExpr, ()>:
     SimpleExpr 'WITH' Identifier {
         let expr = Box::new($1?);
-        let id = crate::license_exception_id::LicenseExceptionId($3?);
+        let id = crate::LicenseExceptionId($3?);
         let license_exception_id = ast::LicenseExceptionId{id};
         Ok(ast::CompoundExpr::SimpleExprWithException(
              ast::SimpleExprWithException{expr, license_exception_id}))
@@ -56,7 +56,7 @@ SimpleExpr -> Result<ast::SimpleExpr, ()>:
       Ok(ast::SimpleExpr::LicenseRef(ast::LicenseRef{document_ref, license_ref}))
     }
   | Identifier '+' { //license-id+
-      let id = crate::license_id::LicenseId($1?);
+      let id = crate::LicenseId($1?);
       Ok(ast::SimpleExpr::LicenseId(ast::LicenseId{id, plus: true}))
     }
   | Identifier { //license-id or license-ref
@@ -66,7 +66,7 @@ SimpleExpr -> Result<ast::SimpleExpr, ()>:
             Ok(ast::SimpleExpr::LicenseRef(ast::LicenseRef {document_ref:None, license_ref}))
           }
         else {
-            Ok(ast::SimpleExpr::LicenseId(ast::LicenseId {id: crate::license_id::LicenseId(license_str), plus: false, }))
+            Ok(ast::SimpleExpr::LicenseId(ast::LicenseId {id: crate::LicenseId(license_str), plus: false, }))
         }
      }
   ;
@@ -131,13 +131,13 @@ pub mod ast {
 
   #[derive(Debug)]
   pub struct LicenseId {
-      pub id: crate::license_id::LicenseId,
+      pub id: crate::LicenseId,
       pub plus: bool,
   }
 
   #[derive(Debug)]
   pub struct LicenseExceptionId {
-      pub id: crate::license_exception_id::LicenseExceptionId,
+      pub id: crate::LicenseExceptionId,
   }
 
   #[derive(Debug)]
