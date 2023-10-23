@@ -1,3 +1,4 @@
+pub mod license_data;
 pub mod license_exception_id;
 pub mod license_expression_lexer;
 pub mod license_expression_parser;
