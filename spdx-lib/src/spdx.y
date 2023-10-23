@@ -15,24 +15,24 @@ LicenseExpr -> Result<ast::LicenseExpr, ()>:
   ;
 
 CompoundExpr -> Result<ast::CompoundExpr, ()>:
-    CompoundExpr 'OR' Term {
+    CompoundExpr 'OR' AExpr {
         let lexpr = Box::new($1?);
         let rexpr = Box::new($3?);
         Ok(ast::CompoundExpr::OrExpr(ast::OrExpr{lexpr, rexpr}))
     }
-  | Term { $1 }
+  | AExpr { $1 }
   ;
 
-Term -> Result<ast::CompoundExpr, ()>:
-    Term 'AND' Factor {
+AExpr -> Result<ast::CompoundExpr, ()>:
+    AExpr 'AND' BExpr {
         let lexpr = Box::new($1?);
         let rexpr = Box::new($3?);
         Ok(ast::CompoundExpr::AndExpr(ast::AndExpr{lexpr, rexpr}))
     }
-    | Factor { $1 }
+    | BExpr { $1 }
   ;
 
-Factor -> Result<ast::CompoundExpr, ()>:
+BExpr -> Result<ast::CompoundExpr, ()>:
     SimpleExpr 'WITH' Identifier {
         let expr = Box::new($1?);
         let id = crate::LicenseExceptionId($3?);
