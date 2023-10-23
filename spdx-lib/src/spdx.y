@@ -80,8 +80,8 @@ Identifier -> Result<String, ()>:
 
 %%
 
-static LICENSE_REF: &str = "LicenseRef-";
-static DOCUMENT_REF: &str = "DocumentRef-";
+pub static LICENSE_REF: &str = "LicenseRef-";
+pub static DOCUMENT_REF: &str = "DocumentRef-";
 
 pub mod ast {
 

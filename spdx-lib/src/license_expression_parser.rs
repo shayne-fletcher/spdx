@@ -41,11 +41,11 @@ impl std::fmt::Display for LicenseRef {
             Some(ref document_ref) => {
                 write!(
                     f,
-                    "DocumentRef-{}:LicenseRef-{}",
-                    document_ref, self.license_ref
+                    "{}{}:{}{}",
+                    DOCUMENT_REF, document_ref, LICENSE_REF, self.license_ref
                 )
             }
-            None => write!(f, "LicenseRef-{}", self.license_ref),
+            None => write!(f, "{}{}", LICENSE_REF, self.license_ref),
         }
     }
 }
