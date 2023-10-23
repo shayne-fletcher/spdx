@@ -3,6 +3,7 @@ use std::io::{self, BufRead, Write};
 pub fn repl() {
     let lexerdef = spdx_lib::license_expression_lexer::lexerdef();
     let stdin = io::stdin();
+    println!("Type SPDX license expressions (^D to exit).");
     loop {
         print!(">>> ");
         io::stdout().flush().ok();
