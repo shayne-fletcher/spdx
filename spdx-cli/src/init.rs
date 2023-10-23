@@ -10,7 +10,7 @@ pub fn init_license_data() -> Result<(), Box<dyn Error>> {
     let start = Instant::now();
     let license_json = blocking::get("https://spdx.org/licenses/licenses.json")?.text()?;
     let exception_json = blocking::get("https://spdx.org/licenses/exceptions.json")?.text()?;
-    println!("Licesnse data loading completed in {:?}.", start.elapsed());
+    println!("License data loading completed in {:?}.", start.elapsed());
 
     LICENSES
         .set(serde_json::from_str(&license_json)?)
