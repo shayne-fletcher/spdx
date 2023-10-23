@@ -6,6 +6,10 @@ pub mod license_id;
 pub mod license_provider;
 pub mod store;
 
+pub use license_data::LicenseExceptionList;
+pub use license_data::LicenseExceptionSummary;
+pub use license_data::LicenseList;
+pub use license_data::LicenseSummary;
 pub use license_exception_id::LicenseExceptionId;
 pub use license_expression_parser::ast;
 pub use license_id::LicenseId;

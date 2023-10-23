@@ -4,13 +4,31 @@ use serde::{Deserialize, Serialize};
 use url::Url;
 
 #[derive(Debug, Serialize, Deserialize)]
+pub struct LicenseList {
+    #[serde(rename = "licenseListVersion")]
+    pub license_list_version: String,
+    #[serde(rename = "licenses")]
+    pub licenses: Vec<LicenseSummary>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct LicenseExceptionList {
+    #[serde(rename = "licenseListVersion")]
+    pub license_list_version: String,
+    #[serde(rename = "releaseDate")]
+    pub release_date: chrono::NaiveDate,
+    #[serde(rename = "exceptions")]
+    pub exceptions: Vec<LicenseExceptionSummary>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct LicenseSummary {
     #[serde(rename = "reference")]
-    pub reference: Url,
+    pub reference: String,
     #[serde(rename = "isDeprecatedLicenseId")]
     pub is_deprecated_licence_id: bool,
     #[serde(rename = "detailsUrl")]
-    pub details_url: Url,
+    pub details_url: String,
     #[serde(rename = "referenceNumber")]
     pub reference_umber: i32,
     #[serde(rename = "name")]
@@ -26,21 +44,21 @@ pub struct LicenseSummary {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct LicenseException {
+pub struct LicenseExceptionSummary {
+    #[serde(rename = "reference")]
+    pub reference: String,
     #[serde(rename = "isDeprecatedLicenseId")]
     pub is_deprecated_license_id: bool,
-    #[serde(rename = "licenseExceptionText")]
-    pub license_exception_text: String,
+    #[serde(rename = "detailsUrl")]
+    pub details_url: String,
     #[serde(rename = "name")]
     pub name: String,
-    #[serde(rename = "licenseComments")]
-    pub license_comments: String,
+    #[serde(rename = "referenceNumber")]
+    pub reference_number: i32,
     #[serde(rename = "seeAlso")]
     pub see_also: Vec<Url>,
     #[serde(rename = "licenseExceptionId")]
     pub license_exception_id: LicenseExceptionId,
-    #[serde(rename = "exceptionTextHtml")]
-    pub exception_text_html: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -81,4 +99,22 @@ pub struct LicenseDetailCrossRef {
     pub is_way_back_link: bool,
     #[serde(rename = "order")]
     pub order: i32,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct LicenseExceptionDetail {
+    #[serde(rename = "isDeprecatedLicenseId")]
+    pub is_deprecated_license_id: bool,
+    #[serde(rename = "licenseExceptionText")]
+    pub license_exception_text: String,
+    #[serde(rename = "name")]
+    pub name: String,
+    #[serde(rename = "licenseComments")]
+    pub license_comments: String,
+    #[serde(rename = "seeAlso")]
+    pub see_also: Vec<Url>,
+    #[serde(rename = "licenseExceptionId")]
+    pub license_exception_id: LicenseExceptionId,
+    #[serde(rename = "exceptionTextHtml")]
+    pub exception_text_html: String,
 }

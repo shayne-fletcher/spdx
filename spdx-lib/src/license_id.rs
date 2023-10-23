@@ -20,3 +20,9 @@ impl AsMut<String> for LicenseId {
         &mut self.0
     }
 }
+
+impl From<String> for LicenseId {
+    fn from(s: String) -> LicenseId {
+        LicenseId(s)
+    }
+}
