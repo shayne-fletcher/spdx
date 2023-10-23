@@ -1,37 +1,20 @@
-use std::ops::Deref;
-use std::ops::DerefMut;
-
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct LicenseExceptionId(pub String);
 
 impl std::fmt::Display for LicenseExceptionId {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
-        self.deref().fmt(f)
-    }
-}
-
-impl Deref for LicenseExceptionId {
-    type Target = String;
-
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-impl DerefMut for LicenseExceptionId {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.0
+        self.as_ref().fmt(f)
     }
 }
 
 impl AsRef<String> for LicenseExceptionId {
     fn as_ref(&self) -> &String {
-        self.deref()
+        &self.0
     }
 }
 
 impl AsMut<String> for LicenseExceptionId {
     fn as_mut(&mut self) -> &mut String {
-        self.deref_mut()
+        &mut self.0
     }
 }
