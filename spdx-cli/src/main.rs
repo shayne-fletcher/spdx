@@ -18,13 +18,13 @@ struct Args {
 }
 
 // cargo run -p spdx-cli -- --data-dir ./data repl
-// cargo run -p spdx-cli -- --data-dir ./data name --license "AGPL-3.0"
+// cargo run -p spdx-cli -- --data-dir ./data name --license-id "AGPL-3.0"
 #[derive(Subcommand)]
 enum Commands {
     Repl,
     Name {
         #[arg(short, long, value_parser = clap::value_parser!(LicenseId))]
-        license: LicenseId,
+        license_id: LicenseId,
     },
 }
 
@@ -70,7 +70,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     match &args.command {
         Some(Commands::Repl) => commands::repl(),
-        Some(Commands::Name { license }) => commands::name(license),
+        Some(Commands::Name { license_id }) => commands::name(license_id),
         None => (),
     }
 
