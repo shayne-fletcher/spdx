@@ -4,117 +4,80 @@ use serde::{Deserialize, Serialize};
 use url::Url;
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LicenseList {
-    #[serde(rename = "licenseListVersion")]
     pub license_list_version: String,
-    #[serde(rename = "licenses")]
     pub licenses: Vec<LicenseSummary>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LicenseExceptionList {
-    #[serde(rename = "licenseListVersion")]
     pub license_list_version: String,
-    #[serde(rename = "releaseDate")]
     pub release_date: chrono::NaiveDate,
-    #[serde(rename = "exceptions")]
     pub exceptions: Vec<LicenseExceptionSummary>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LicenseSummary {
-    #[serde(rename = "reference")]
     pub reference: String,
-    #[serde(rename = "isDeprecatedLicenseId")]
-    pub is_deprecated_licence_id: bool,
-    #[serde(rename = "detailsUrl")]
+    pub is_deprecated_license_id: bool,
     pub details_url: String,
-    #[serde(rename = "referenceNumber")]
-    pub reference_umber: i32,
-    #[serde(rename = "name")]
+    pub reference_number: i32,
     pub name: String,
-    #[serde(rename = "licenseId")]
     pub license_id: LicenseId,
-    #[serde(rename = "seeAlso")]
     pub see_also: Vec<Url>,
-    #[serde(rename = "isOsiApproved")]
     pub is_osi_approved: bool,
-    #[serde(rename = "isFsfLibre")]
     pub is_fsf_libre: Option<bool>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LicenseExceptionSummary {
-    #[serde(rename = "reference")]
     pub reference: String,
-    #[serde(rename = "isDeprecatedLicenseId")]
     pub is_deprecated_license_id: bool,
-    #[serde(rename = "detailsUrl")]
     pub details_url: String,
-    #[serde(rename = "name")]
     pub name: String,
-    #[serde(rename = "referenceNumber")]
     pub reference_number: i32,
-    #[serde(rename = "seeAlso")]
     pub see_also: Vec<Url>,
-    #[serde(rename = "licenseExceptionId")]
     pub license_exception_id: LicenseExceptionId,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LicenseDetail {
-    #[serde(rename = "isDeprecatedLicenseId")]
     pub is_deprecated_license_id: bool,
-    #[serde(rename = "licenseText")]
     pub license_text: String,
-    #[serde(rename = "standardLicenseTemplate")]
     pub standard_license_template: String,
-    #[serde(rename = "name")]
     pub name: String,
-    #[serde(rename = "licenseId")]
     pub license_id: LicenseId,
-    #[serde(rename = "crossRef")]
     pub cross_ref: Vec<LicenseDetailCrossRef>,
-    #[serde(rename = "seeAlso")]
     pub see_also: Vec<Url>,
-    #[serde(rename = "isOsiApproved")]
     pub is_osi_approved: bool,
-    #[serde(rename = "licenseTextHtml")]
     pub license_text_html: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LicenseDetailCrossRef {
-    #[serde(rename = "match")]
     pub match_: String,
-    #[serde(rename = "url")]
     pub url: Url,
-    #[serde(rename = "isValid")]
     pub is_valid: bool,
-    #[serde(rename = "isLive")]
     pub is_live: bool,
-    #[serde(rename = "timestamp")]
     pub timestamp: DateTime<FixedOffset>,
-    #[serde(rename = "isWayBackLink")]
     pub is_way_back_link: bool,
-    #[serde(rename = "order")]
     pub order: i32,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LicenseExceptionDetail {
-    #[serde(rename = "isDeprecatedLicenseId")]
     pub is_deprecated_license_id: bool,
-    #[serde(rename = "licenseExceptionText")]
     pub license_exception_text: String,
-    #[serde(rename = "name")]
     pub name: String,
-    #[serde(rename = "licenseComments")]
     pub license_comments: String,
-    #[serde(rename = "seeAlso")]
     pub see_also: Vec<Url>,
-    #[serde(rename = "licenseExceptionId")]
     pub license_exception_id: LicenseExceptionId,
-    #[serde(rename = "exceptionTextHtml")]
     pub exception_text_html: String,
 }
