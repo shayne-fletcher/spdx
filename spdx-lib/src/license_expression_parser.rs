@@ -1,3 +1,5 @@
+#![allow(clippy::let_unit_value)]
+
 use lrpar::lrpar_mod;
 
 lrpar_mod!("spdx.y");
