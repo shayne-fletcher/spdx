@@ -2,10 +2,12 @@
 name = "spdx-cli"
 version = "0.1.0"
 edition = "2021"
-license = "MIT"
+license = "MIT OR Apache-2.0"
 
 [dependencies]
 clap = { version = "4.4.6", features = ["derive"] }
-serde_json = "1.0.107"
+jwalk = "0.8.1"
+rayon = "1.8.0"
 reqwest = { version = "0.11.22", features = ["blocking"] }
+serde_json = "1.0.107"
 spdx-lib = { path = "../spdx-lib" }
