@@ -29,6 +29,11 @@ AExpr -> Result<ast::CompoundExpr, ()>:
         let rexpr = Box::new($3?);
         Ok(ast::CompoundExpr::AndExpr(ast::AndExpr{lexpr, rexpr}))
     }
+    AExpr '/' BExpr {
+        let lexpr = Box::new($1?);
+        let rexpr = Box::new($3?);
+        Ok(ast::CompoundExpr::AndExpr(ast::AndExpr{lexpr, rexpr}))
+    }
     | BExpr { $1 }
   ;
 
