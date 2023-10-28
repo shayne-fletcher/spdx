@@ -20,16 +20,18 @@ CompoundExpr -> Result<ast::CompoundExpr, ()>:
         let rexpr = Box::new($3?);
         Ok(ast::CompoundExpr::OrExpr(ast::OrExpr{lexpr, rexpr}))
     }
+  | CompoundExpr '/' AExpr {
+        // This syntax is unofficial but it occurs on crates.io. e.g.
+        // 'unicode-noramlization' reports license 'MIT/Apache-2.0'
+        let lexpr = Box::new($1?);
+        let rexpr = Box::new($3?);
+        Ok(ast::CompoundExpr::OrExpr(ast::OrExpr{lexpr, rexpr}))
+    }
   | AExpr { $1 }
   ;
 
 AExpr -> Result<ast::CompoundExpr, ()>:
     AExpr 'AND' BExpr {
-        let lexpr = Box::new($1?);
-        let rexpr = Box::new($3?);
-        Ok(ast::CompoundExpr::AndExpr(ast::AndExpr{lexpr, rexpr}))
-    }
-  | AExpr '/' BExpr {
         let lexpr = Box::new($1?);
         let rexpr = Box::new($3?);
         Ok(ast::CompoundExpr::AndExpr(ast::AndExpr{lexpr, rexpr}))

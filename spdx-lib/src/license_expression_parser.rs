@@ -153,6 +153,15 @@ mod test {
     }
 
     #[test]
+    fn test_roundtrip_composite_or_2() {
+        let s = "MIT/ Apache-2.0";
+        assert_eq!(
+            "MIT OR Apache-2.0",
+            s.parse::<LicenseExpr>().unwrap().to_string()
+        )
+    }
+
+    #[test]
     fn test_roundtrip_composite_and_0() {
         let s = "LGPL-2.1-only AND MIT";
         assert_eq!(s.parse::<LicenseExpr>().unwrap().to_string(), s)
