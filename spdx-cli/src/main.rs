@@ -39,6 +39,9 @@ static LICENSES: OnceLock<LicenseList> = OnceLock::new();
 static LICENSE_EXCEPTIONS: OnceLock<LicenseExceptionList> = OnceLock::new();
 
 fn main() -> Result<(), Box<dyn Error>> {
+    let subscriber = tracing_subscriber::FmtSubscriber::new();
+    tracing::subscriber::set_global_default(subscriber)?;
+
     let args = Args::parse();
 
     if let Some(num_threads) = args.num_threads {

@@ -10,8 +10,6 @@ pub fn init_license_data() -> Result<(), Box<dyn Error>> {
     let start = Instant::now();
     let license_json = blocking::get("https://spdx.org/licenses/licenses.json")?.text()?;
     let exception_json = blocking::get("https://spdx.org/licenses/exceptions.json")?.text()?;
-    println!("License data loading completed in {:?}.", start.elapsed());
-
     LICENSES
         .set(serde_json::from_str(&license_json)?)
         .map_err(|_| "Unexpected error initializing licenses")?;
@@ -19,7 +17,8 @@ pub fn init_license_data() -> Result<(), Box<dyn Error>> {
         .set(serde_json::from_str(&exception_json)?)
         .map_err(|_| "Unexpected error initializing licenses")?;
 
-    println!(
+    tracing::info!("License data loaded in {:?}.", start.elapsed());
+    tracing::info!(
         "{} licenses loaded.",
         LICENSES
             .get()
@@ -27,7 +26,7 @@ pub fn init_license_data() -> Result<(), Box<dyn Error>> {
             .licenses
             .len()
     );
-    println!(
+    tracing::info!(
         "{} license exceptions loaded.",
         LICENSE_EXCEPTIONS
             .get()
