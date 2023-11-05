@@ -22,6 +22,7 @@ pub fn repl() {
                 }
                 match res {
                     Some(Ok(r)) => println!("Result: {:#?}", r),
+                    Some(Err(e)) => println!("Error: {:#?}", e),
                     _ => eprintln!("Unrecognizeable as an SPDX license expression."),
                 }
             }

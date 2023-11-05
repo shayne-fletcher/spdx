@@ -5,6 +5,7 @@ fn main() {
     CTLexerBuilder::new()
         .lrpar_config(|ctp| {
             ctp.yacckind(YaccKind::Grmtools)
+                // .recoverer(lrpar::RecoveryKind::None)
                 .grammar_in_src_dir("spdx.y")
                 .unwrap()
         })

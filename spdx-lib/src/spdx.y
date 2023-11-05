@@ -1,9 +1,10 @@
 %start LicenseExpr
+
 %%
 
 // [AST license expressions specification](https://ast.github.io/ast-spec/v2.3/AST-license-expressions/)
 
-LicenseExpr -> Result<ast::LicenseExpr, ()>:
+LicenseExpr -> Result<ast::LicenseExpr>:
    CompoundExpr {
      let compound_expr = $1?;
      if let ast::CompoundExpr::SimpleExpr(simple_expr) = compound_expr {
@@ -14,7 +15,7 @@ LicenseExpr -> Result<ast::LicenseExpr, ()>:
    }
   ;
 
-CompoundExpr -> Result<ast::CompoundExpr, ()>:
+CompoundExpr -> Result<ast::CompoundExpr>:
     CompoundExpr 'OR' AExpr {
         let lexpr = Box::new($1?);
         let rexpr = Box::new($3?);
@@ -30,7 +31,7 @@ CompoundExpr -> Result<ast::CompoundExpr, ()>:
   | AExpr { $1 }
   ;
 
-AExpr -> Result<ast::CompoundExpr, ()>:
+AExpr -> Result<ast::CompoundExpr>:
     AExpr 'AND' BExpr {
         let lexpr = Box::new($1?);
         let rexpr = Box::new($3?);
@@ -39,7 +40,7 @@ AExpr -> Result<ast::CompoundExpr, ()>:
   | BExpr { $1 }
   ;
 
-BExpr -> Result<ast::CompoundExpr, ()>:
+BExpr -> Result<ast::CompoundExpr>:
     SimpleExpr 'WITH' Identifier {
         let expr = Box::new($1?);
         let id = crate::LicenseExceptionId($3?);
@@ -56,10 +57,20 @@ BExpr -> Result<ast::CompoundExpr, ()>:
     }
   ;
 
-SimpleExpr -> Result<ast::SimpleExpr, ()>:
+SimpleExpr -> Result<ast::SimpleExpr>:
     Identifier ':' Identifier { // license-ref
-      let document_ref = Some($1?.strip_prefix(DOCUMENT_REF).ok_or(())?.to_owned());
-      let license_ref = $3?.strip_prefix(LICENSE_REF).ok_or(())?.to_owned();
+      let prefix = $1?;
+      let suffix = $3?;
+      let document_ref = Some(prefix.strip_prefix(DOCUMENT_REF).ok_or(Box::<dyn std::error::Error>::from(format!("'DocumentRef-' expected got '{prefix}'")))?.to_owned());
+      let license_ref = suffix.strip_prefix(LICENSE_REF).ok_or(Box::<dyn std::error::Error>::from(format!("'License-Ref-' expected got '{suffix}'")))?.to_owned();
+      if let Some(document_ref) = &document_ref {
+          if document_ref.is_empty() {
+              return Err("'DocumentRef-' suffix is empty".into());
+            }
+        }
+      if license_ref.is_empty() {
+          return Err(Box::<dyn std::error::Error>::from("'LicenseRef-' suffix is empty"));
+        }
       Ok(ast::SimpleExpr::LicenseRef(ast::LicenseRef{document_ref, license_ref}))
     }
   | Identifier '+' { //license-id+
@@ -69,7 +80,10 @@ SimpleExpr -> Result<ast::SimpleExpr, ()>:
   | Identifier { //license-id or license-ref
         let license_str = $1?;
         if license_str.starts_with(LICENSE_REF) {
-            let license_ref = license_str.strip_prefix(LICENSE_REF).ok_or(())?.to_owned();
+            let license_ref = license_str.strip_prefix(LICENSE_REF).unwrap().to_owned();
+            if license_ref.is_empty() {
+                return Err("'LicenseRef-' suffix is empty".into());
+              }
             Ok(ast::SimpleExpr::LicenseRef(ast::LicenseRef {document_ref:None, license_ref}))
           }
         else {
@@ -78,17 +92,23 @@ SimpleExpr -> Result<ast::SimpleExpr, ()>:
      }
   ;
 
-Identifier -> Result<String, ()>:
+Identifier -> Result<String>:
   'IDENTIFIER' {
-      let v = $1.map_err(|_| ())?;
+      let v = $1?;
       Ok($lexer.span_str(v.span()).to_owned())
     }
+  ;
+
+Unmatched -> ():
+  "UNMATCHED" { }
   ;
 
 %%
 
 pub static LICENSE_REF: &str = "LicenseRef-";
 pub static DOCUMENT_REF: &str = "DocumentRef-";
+
+pub type Result<T> = std::result::Result<T, std::boxed::Box<dyn std::error::Error>>;
 
 pub mod ast {
 
