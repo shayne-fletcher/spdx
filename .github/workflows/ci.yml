@@ -1,16 +1,4 @@
-name: Build and test
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 jobs:
-  build-and-test:
-    name: ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu, macos, windows]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: Swatinem/rust-cache@v2
-      - run: cargo check
-      - run: cargo build
-      - run: cargo test
+  reindeer-style-workflow:
+     uses: shayne-fletcher/reindeer-style-workflow/.github/workflows/reindeer-style-workflow.yml@main
